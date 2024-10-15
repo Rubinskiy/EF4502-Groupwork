@@ -68,62 +68,62 @@ This code is a Flask-built Python web application. It offers standard file uploa
    key_bytes = key.encode()
    path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     ```
-  Converts key back to bytes and then constructs the file path where the uploaded file is stored.
-  ```py
-  try:
+     Converts key back to bytes and then constructs the file path where the uploaded file is stored.
+     ```py
+     try:
     decrypted_data = decrypt_file(path, key_bytes)
-except Exception as e:
+   except Exception as e:
     return "Invalid decryption key", 500
-  ```
-  Decryption process with error handling. If it fails, the function returns the message `Invalide decryption key` with Error message 500
-  ```py
-  with NamedTemporaryFile(delete=False) as temp_file:
+     ```
+     Decryption process with error handling. If it fails, the function returns the message `Invalide decryption key` with Error message 500
+     ```py
+     with NamedTemporaryFile(delete=False) as temp_file:
     temp_file.write(decrypted_data)
     temp_file_path = temp_file.name
-  ```
-  Write the decrypted data to temporsry file
-  ```py
-  return send_file(temp_file_path, as_attachment=True, download_name=filename)
-  ```
-  Sends the decrypted file to uaser
+     ```
+     Write the decrypted data to temporsry file
+     ```py
+     return send_file(temp_file_path, as_attachment=True, download_name=filename)
+     ```
+     Sends the decrypted file to uaser
 5. Encryptuon Function
-  ```py
-  key = Fernet.generate_key()
-  fernet = Fernet(key)
-  ```
-  Generates the key
-  ```py
-  with open(file_path, 'rb') as f:
+     ```py
+     key = Fernet.generate_key()
+     fernet = Fernet(key)
+     ```
+     Generates the key
+     ```py
+     with open(file_path, 'rb') as f:
     data = f.read()
-  encrypted_data = fernet.encrypt(data)
+     encrypted_data = fernet.encrypt(data)
 
-  ```
-  Reads the file contents and encryps the data
-  ```py
-  with open(file_path, 'wb') as f:
+     ```
+     Reads the file contents and encryps the data
+     ```py
+     with open(file_path, 'wb') as f:
     f.write(encrypted_data)
-  return key
-  ```
-Writes the encrypted data back to file and returns the key
+     return key
+     ```
+   Writes the encrypted data back to file and returns the key
 
-5. Decryption Function
+6. Decryption Function
    ```py
    fernet = Fernet(key)
     with open(file_path, 'rb') as f:
     encrypted_data = f.read()
     ```
-  Sets up Fernet with the key then reads the encrypted file
-  ```py
-  decrypted_data = fernet.decrypt(encrypted_data)
-  return decrypted_data
-  ```
-  Decrypting the encrypted data then returns the decrypted data
+   Sets up Fernet with the key then reads the encrypted file
+     ```py
+     decrypted_data = fernet.decrypt(encrypted_data)
+     return decrypted_data
+     ```
+    Decrypting the encrypted data then returns the decrypted data
 
-6. Running the app
-   ```py
+7. Running the app
+      ```py
    if __name__ == '__main__':
     app.run(debug=True)
     ```
-  This ensures that the app will run in debug mode
+     This ensures that the app will run in debug mode
 
    
