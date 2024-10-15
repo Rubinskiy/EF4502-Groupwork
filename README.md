@@ -106,7 +106,7 @@ except Exception as e:
   ```
 Writes the encrypted data back to file and returns the key
 
-6. Decryption Function
+5. Decryption Function
    ```py
    fernet = Fernet(key)
     with open(file_path, 'rb') as f:
@@ -119,7 +119,7 @@ Writes the encrypted data back to file and returns the key
   ```
   Decrypting the encrypted data then returns the decrypted data
 
-5. Running the app
+6. Running the app
    ```py
    if __name__ == '__main__':
     app.run(debug=True)
